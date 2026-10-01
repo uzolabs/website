@@ -1,10 +1,11 @@
-import { ArrowRight, ArrowUpRight } from "lucide-react"
+import { ArrowRight, ArrowUpRight, HeartHandshake } from "lucide-react"
 import Link from "next/link"
+import { DonationAddress } from "@/components/donation-address"
 import { FaucetForm } from "@/components/faucet-form"
 import { PageHeader } from "@/components/page-header"
 import { Reveal } from "@/components/reveal"
 import { StatusBadge } from "@/components/status-badge"
-import { cooldownHours, faucetAmount, faucetEnabled } from "@/lib/faucet"
+import { cooldownHours, donationAddress, faucetAmount, faucetEnabled } from "@/lib/faucet"
 import { testnet } from "@/lib/network"
 import { pageMetadata } from "@/lib/site"
 
@@ -45,7 +46,7 @@ export default function FaucetPage() {
 
             {faucetEnabled ? (
               <div className="mt-6">
-                <FaucetForm amount={faucetAmount} token={testnet.nativeToken} />
+                <FaucetForm amount={faucetAmount} token={testnet.nativeToken} donationAddress={donationAddress} />
               </div>
             ) : (
               <p className="mt-4 text-muted-foreground">
@@ -89,6 +90,35 @@ export default function FaucetPage() {
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
             </Link>
           </Reveal>
+
+          {faucetEnabled ? (
+            <Reveal delay={0.1} className="glass rounded-3xl p-6 sm:p-8 lg:col-span-2">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex gap-4">
+                  <span
+                    aria-hidden="true"
+                    className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary"
+                  >
+                    <HeartHandshake className="size-5" />
+                  </span>
+                  <div>
+                    <h2 className="text-lg font-bold">Help the next builder</h2>
+                    <p className="mt-1 max-w-xl text-muted-foreground">
+                      Done testing? Send your unused {testnet.nativeToken} back to the faucet so others can claim. Every
+                      top-up keeps it running.
+                    </p>
+                  </div>
+                </div>
+                <div className="min-w-0 lg:w-[30rem] lg:shrink-0">
+                  <DonationAddress address={donationAddress} token={testnet.nativeToken} chainId={testnet.chainId} />
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Testnet {testnet.nativeToken} only (chain {testnet.chainId}). Never send mainnet BOT or other tokens
+                    here.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          ) : null}
         </div>
       </section>
     </>

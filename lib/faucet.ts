@@ -17,6 +17,9 @@ export const faucetAmount = process.env.FAUCET_AMOUNT ?? "0.1"
 /** Hours between claims for the same wallet or IP. Override with FAUCET_COOLDOWN_HOURS. */
 export const cooldownHours = Number(process.env.FAUCET_COOLDOWN_HOURS ?? 24)
 
+/** Where people can send spare tBOT to top the faucet back up. Testnet only. */
+export const donationAddress = "0xe3e5D9f7eD994A6b5f697e60218a29F3Bf98B485"
+
 /** The faucet only switches on once a funded testnet key is set. No key, no claims. */
 export const faucetEnabled = Boolean(process.env.FAUCET_PRIVATE_KEY)
 
@@ -24,6 +27,11 @@ function account() {
   const raw = process.env.FAUCET_PRIVATE_KEY
   if (!raw) throw new Error("FAUCET_PRIVATE_KEY is not set")
   return privateKeyToAccount((raw.startsWith("0x") ? raw : `0x${raw}`) as `0x${string}`)
+}
+
+/** The faucet wallet's public address. Only valid when the faucet is enabled. */
+export function faucetAddress() {
+  return account().address
 }
 
 export const publicClient = createPublicClient({ chain: testnetChain, transport: http() })
