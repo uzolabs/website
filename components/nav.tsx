@@ -13,12 +13,16 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { navLinks, site } from "@/lib/site"
+import { navLinks, site, siteHref } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 function Wordmark() {
   return (
-    <Link href="/" className="flex items-center gap-2 rounded-full pr-2 text-foreground" aria-label="Uzo Labs home">
+    <Link
+      href={siteHref("/")}
+      className="flex items-center gap-2 rounded-full pr-2 text-foreground"
+      aria-label="Uzo Labs home"
+    >
       <span className="font-display text-[1.75rem] leading-none">Uzo</span>
     </Link>
   )
@@ -43,7 +47,7 @@ export function Nav() {
                   active={isActive(link.href)}
                   className="rounded-full px-3.5 py-2 text-[0.95rem] text-muted-foreground hover:text-foreground data-active:bg-foreground/10 data-active:text-foreground"
                 >
-                  <Link href={link.href} aria-current={isActive(link.href) ? "page" : undefined}>
+                  <Link href={siteHref(link.href)} aria-current={isActive(link.href) ? "page" : undefined}>
                     {link.label}
                   </Link>
                 </NavigationMenuLink>
@@ -94,7 +98,7 @@ export function Nav() {
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
-                    href={link.href}
+                    href={siteHref(link.href)}
                     onClick={() => setOpen(false)}
                     aria-current={isActive(link.href) ? "page" : undefined}
                     className={cn(

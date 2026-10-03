@@ -9,7 +9,7 @@ import { QuickstartTabs } from "@/components/sections/quickstart"
 import { Button } from "@/components/ui/button"
 import { UliZigzag } from "@/components/uli/zigzag"
 import { explorerName, testnet } from "@/lib/network"
-import { pageMetadata } from "@/lib/site"
+import { faucetHref, pageMetadata } from "@/lib/site"
 
 export const metadata = pageMetadata({
   title: "Quickstart",
@@ -68,7 +68,7 @@ export default function QuickstartPage() {
       >
         <Reveal className="flex flex-col gap-3 sm:flex-row">
           <Button asChild className={primary}>
-            <Link href="/faucet">
+            <Link href={faucetHref}>
               <Droplets className="size-4" aria-hidden="true" />
               Open the faucet
             </Link>

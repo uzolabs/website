@@ -23,6 +23,19 @@ export const site = {
     "https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1267020&theme=light&t=1790998726597",
 } as const
 
+/**
+ * The faucet moves to its own host once NEXT_PUBLIC_FAUCET_SUBDOMAIN is "true".
+ * Set it for Production only, after faucet.uzolabs.xyz resolves.
+ */
+export const faucetOnSubdomain = process.env.NEXT_PUBLIC_FAUCET_SUBDOMAIN === "true"
+export const faucetOrigin = "https://faucet.uzolabs.xyz"
+export const faucetHref = faucetOnSubdomain ? faucetOrigin : "/faucet"
+
+/** Main-site links become absolute while the faucet has its own host, so they leave the subdomain. */
+export function siteHref(path: string) {
+  return faucetOnSubdomain ? `${site.url}${path}` : path
+}
+
 export const navLinks = [
   { label: "Products", href: "/products" },
   { label: "Quickstart", href: "/quickstart" },

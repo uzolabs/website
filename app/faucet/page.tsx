@@ -7,12 +7,12 @@ import { Reveal } from "@/components/reveal"
 import { StatusBadge } from "@/components/status-badge"
 import { cooldownHours, donationAddress, faucetAmount, faucetEnabled } from "@/lib/faucet"
 import { testnet } from "@/lib/network"
-import { pageMetadata } from "@/lib/site"
+import { faucetHref, pageMetadata, siteHref } from "@/lib/site"
 
 export const metadata = pageMetadata({
   title: "Testnet faucet",
   description: `Claim test ${testnet.nativeToken} for BOT Chain testnet so you can deploy and try contracts without spending real funds.`,
-  path: "/faucet",
+  path: faucetHref,
 })
 
 const linkClass = "rounded-sm text-foreground underline underline-offset-4 hover:text-primary"
@@ -83,7 +83,7 @@ export default function FaucetPage() {
               </li>
             </ul>
             <Link
-              href="/quickstart#network"
+              href={siteHref("/quickstart#network")}
               className="group mt-6 inline-flex items-center gap-2 rounded-full py-1 font-medium text-primary underline-offset-4 hover:underline"
             >
               Next: add the network

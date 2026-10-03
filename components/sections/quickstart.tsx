@@ -4,6 +4,7 @@ import { Reveal } from "@/components/reveal"
 import { Section } from "@/components/section"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { testnet } from "@/lib/network"
+import { faucetHref } from "@/lib/site"
 import { foundryDeploy, foundrySnippet, hardhatDeploy, hardhatSnippet, viemSnippet } from "@/lib/snippets"
 
 const triggerClass =
@@ -53,7 +54,10 @@ export function Quickstart() {
       lede={
         <>
           Pick your tool. Every config below points at real endpoints. Claim test {testnet.nativeToken} from the{" "}
-          <Link href="/faucet" className="rounded-sm text-foreground underline underline-offset-4 hover:text-primary">
+          <Link
+            href={faucetHref}
+            className="rounded-sm text-foreground underline underline-offset-4 hover:text-primary"
+          >
             testnet faucet
           </Link>{" "}
           first.

@@ -1,7 +1,10 @@
 import Link from "next/link"
-import { navLinks, site } from "@/lib/site"
+import { faucetHref, navLinks, site, siteHref } from "@/lib/site"
 
-const pages = [...navLinks, { label: "Claim testnet", href: "/faucet" }]
+const pages = [
+  ...navLinks.map((link) => ({ label: link.label, href: siteHref(link.href) })),
+  { label: "Claim testnet", href: faucetHref },
+]
 
 const external = [
   { label: "Docs", href: site.links.docs },
@@ -18,7 +21,11 @@ export function Footer() {
     <footer className="border-t border-glass-border">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1fr_auto_auto] md:items-start md:gap-16">
         <div>
-          <Link href="/" className="rounded-sm font-display text-[1.75rem] leading-none" aria-label="Uzo Labs home">
+          <Link
+            href={siteHref("/")}
+            className="rounded-sm font-display text-[1.75rem] leading-none"
+            aria-label="Uzo Labs home"
+          >
             {site.name}
           </Link>
           <a

@@ -5,6 +5,7 @@ import { Reveal } from "@/components/reveal"
 import { Section } from "@/components/section"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { mainnet, networks, testnet, type Network } from "@/lib/network"
+import { faucetHref } from "@/lib/site"
 
 type Field = {
   label: string
@@ -34,7 +35,7 @@ function Value({ field, network }: { field: Field; network: Network }) {
   if (field.kind === "faucet") {
     return (
       <Link
-        href="/faucet"
+        href={faucetHref}
         className="inline-flex items-center gap-1 rounded-sm font-medium underline-offset-4 hover:text-primary hover:underline"
       >
         Claim {network.nativeToken}

@@ -8,6 +8,7 @@ import { DonationAddress } from "@/components/donation-address"
 import { Button } from "@/components/ui/button"
 import { faucetErrors, isFaucetErrorCode, type FaucetErrorCode } from "@/lib/faucet-errors"
 import { testnet } from "@/lib/network"
+import { siteHref } from "@/lib/site"
 
 type Result =
   { kind: "ok"; url: string; hash: string; to: string } | { kind: "error"; code: FaucetErrorCode; message: string }
@@ -124,7 +125,7 @@ export function FaucetForm({ amount, token, donationAddress }: FaucetFormProps) 
                     View on BOTScan
                     <ArrowUpRight className="size-4" aria-hidden="true" />
                   </a>
-                  <Link href="/quickstart#network" className={actionLink}>
+                  <Link href={siteHref("/quickstart#network")} className={actionLink}>
                     Next: add the network
                     <ArrowRight className="size-4" aria-hidden="true" />
                   </Link>
