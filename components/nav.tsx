@@ -28,6 +28,19 @@ function Wordmark() {
   )
 }
 
+function NewBadge({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        "pointer-events-none rounded-full bg-primary px-1.5 py-px text-[0.6rem] leading-none font-bold tracking-wide text-primary-foreground uppercase",
+        className,
+      )}
+    >
+      New
+    </span>
+  )
+}
+
 export function Nav() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
@@ -58,9 +71,10 @@ export function Nav() {
                 href={site.links.docs}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full px-3.5 py-2 text-[0.95rem] text-muted-foreground hover:text-foreground"
+                className="relative rounded-full px-3.5 py-2 text-[0.95rem] text-muted-foreground hover:text-foreground"
               >
                 Docs
+                <NewBadge className="absolute -top-0.5 -right-1.5" />
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -113,9 +127,10 @@ export function Nav() {
                   href={site.links.docs}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-xl px-3 py-3 hover:bg-muted"
+                  className="flex items-center gap-2 rounded-xl px-3 py-3 hover:bg-muted"
                 >
                   Docs
+                  <NewBadge />
                 </a>
                 <a
                   href={site.links.github}
