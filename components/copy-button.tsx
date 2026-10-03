@@ -42,7 +42,7 @@ export function CopyButton({ value, label = "text", className }: CopyButtonProps
           size="icon-sm"
           onClick={copy}
           aria-label={`Copy ${label}`}
-          className={cn("rounded-full text-muted-foreground hover:text-foreground", className)}
+          className={cn("rounded-full text-muted-foreground hover:text-foreground max-sm:size-9", className)}
         >
           {copied ? <Check className="text-primary" /> : <Copy />}
         </Button>

@@ -69,7 +69,7 @@ export function FaucetForm({ amount, token, donationAddress }: FaucetFormProps) 
             placeholder="0x..."
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            className="h-12 min-w-0 flex-1 rounded-full border border-glass-border bg-[#100e0c]/80 px-5 font-mono text-[0.95rem] outline-none placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-ring/50"
+            className="h-12 w-full min-w-0 rounded-full border border-glass-border bg-[#100e0c]/80 px-5 font-mono text-[0.95rem] outline-none placeholder:text-muted-foreground/70 focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-ring/50 sm:flex-1"
           />
           <Button
             type="submit"
@@ -91,7 +91,7 @@ export function FaucetForm({ amount, token, donationAddress }: FaucetFormProps) 
           <Dialog.Overlay className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0" />
           <Dialog.Content className="fixed top-1/2 left-1/2 z-50 max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-3xl border border-glass-border bg-popover p-6 text-popover-foreground shadow-2xl outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 sm:p-8">
             <Dialog.Close asChild>
-              <Button variant="ghost" size="icon-sm" className="absolute top-4 right-4 rounded-full">
+              <Button variant="ghost" size="icon-sm" className="absolute top-4 right-4 rounded-full max-sm:size-9">
                 <XIcon />
                 <span className="sr-only">Close</span>
               </Button>
