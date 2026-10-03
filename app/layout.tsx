@@ -62,7 +62,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`dark ${satoshi.variable} ${reggae.variable} ${jetbrains.variable} antialiased`}
     >
-      <body className="min-h-dvh">
+      {/* Extensions like Grammarly add attributes to body before React loads. */}
+      <body className="min-h-dvh" suppressHydrationWarning>
         <Background />
         <TooltipProvider delayDuration={200}>
           <a

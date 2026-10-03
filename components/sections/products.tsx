@@ -40,9 +40,9 @@ export function Products() {
   return (
     <Section
       id="products"
-      eyebrow="What we're building"
+      eyebrow="What we build"
       title="Four tools, one path."
-      lede="Start with configs and templates today. Hosted infrastructure follows once the basics are solid."
+      lede="The SDK and templates are ready to use today. Hosted infrastructure follows once the basics are solid."
       action={{ href: "/products", label: "Explore products" }}
     >
       <ProductGrid />

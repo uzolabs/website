@@ -1,28 +1,42 @@
+export type PhaseItem = {
+  label: string
+  /** Only true once it is published and anyone can use it. */
+  shipped?: boolean
+}
+
 export type Phase = {
   title: string
   summary: string
-  items: string[]
+  items: PhaseItem[]
 }
 
 export const phases: Phase[] = [
   {
     title: "Fix the path",
     summary: "Get the basics right so every common tool knows BOT Chain exists.",
-    items: ["SDK chain configs", "Network reference", "viem and Chainlist contributions"],
+    items: [
+      { label: "SDK chain configs", shipped: true },
+      { label: "Network reference", shipped: true },
+      { label: "viem and Chainlist contributions" },
+    ],
   },
   {
     title: "Build the path",
     summary: "Guides and starters that take a project from an empty folder to a deployed contract.",
-    items: ["Hardhat and Foundry quickstarts", "Contract verification guide", "Starter templates"],
+    items: [
+      { label: "Hardhat and Foundry quickstarts", shipped: true },
+      { label: "Contract verification guide", shipped: true },
+      { label: "Starter templates", shipped: true },
+    ],
   },
   {
     title: "Hackathon ready",
     summary: "Templates for the builds people reach for when the clock is running.",
-    items: ["AI agent template", "Paymaster tutorial", "Indexer starter"],
+    items: [{ label: "AI agent template" }, { label: "Paymaster tutorial" }, { label: "Indexer starter" }],
   },
   {
     title: "Run the rails",
     summary: "Hosted infrastructure for the gaps public endpoints leave open, like event queries.",
-    items: ["Uzo RPC as a hosted service", "Uzo Index as a hosted service"],
+    items: [{ label: "Uzo RPC as a hosted service" }, { label: "Uzo Index as a hosted service" }],
   },
 ]

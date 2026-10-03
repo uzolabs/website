@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { Menu } from "lucide-react"
 import { GitHubIcon } from "@/components/brand-icons"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
@@ -16,14 +15,6 @@ import {
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { navLinks, site } from "@/lib/site"
 import { cn } from "@/lib/utils"
-
-function SoonBadge() {
-  return (
-    <Badge variant="outline" className="border-accent/70 bg-accent/15 text-[0.7rem] text-foreground">
-      Soon
-    </Badge>
-  )
-}
 
 function Wordmark() {
   return (
@@ -59,12 +50,14 @@ export function Nav() {
               </NavigationMenuItem>
             ))}
             <NavigationMenuItem>
-              <span
-                aria-disabled="true"
-                className="flex cursor-not-allowed items-center gap-2 px-3.5 py-2 text-[0.95rem] text-muted-foreground/80"
+              <NavigationMenuLink
+                href={site.links.docs}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full px-3.5 py-2 text-[0.95rem] text-muted-foreground hover:text-foreground"
               >
-                Docs <SoonBadge />
-              </span>
+                Docs
+              </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink
@@ -95,7 +88,7 @@ export function Nav() {
             </SheetTrigger>
             <SheetContent side="right" className="w-[85%] border-glass-border bg-[#12100e]/95 p-6 pt-5">
               <SheetTitle className="flex items-center gap-2">
-                          <span className="font-display text-[1.75rem] leading-none">Uzo</span>
+                <span className="font-display text-[1.75rem] leading-none">Uzo</span>
               </SheetTitle>
               <nav aria-label="Mobile" className="mt-6 flex flex-col gap-1 text-lg">
                 {navLinks.map((link) => (
@@ -106,18 +99,20 @@ export function Nav() {
                     aria-current={isActive(link.href) ? "page" : undefined}
                     className={cn(
                       "rounded-xl px-3 py-3 hover:bg-muted",
-                      isActive(link.href) && "bg-foreground/10 text-primary"
+                      isActive(link.href) && "bg-foreground/10 text-primary",
                     )}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <span
-                  aria-disabled="true"
-                  className="flex items-center gap-2 px-3 py-3 text-muted-foreground"
+                <a
+                  href={site.links.docs}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-xl px-3 py-3 hover:bg-muted"
                 >
-                  Docs <SoonBadge />
-                </span>
+                  Docs
+                </a>
                 <a
                   href={site.links.github}
                   target="_blank"

@@ -8,11 +8,19 @@ export const site = {
     "SDKs, templates and infrastructure that take developers from zero to shipped on BOT Chain. Built in Lagos.",
   links: {
     github: "https://github.com/uzolabs",
+    docs: "https://docs.uzolabs.xyz",
+    sdkRepo: "https://github.com/uzolabs/uzo-sdk",
+    templatesRepo: "https://github.com/uzolabs/templates",
+    docsRepo: "https://github.com/uzolabs/documentation",
     issues: "https://github.com/uzolabs/.github/issues",
     x: "https://x.com/uzolabs",
-    npm: "https://www.npmjs.com/org/uzolabs",
+    npm: "https://www.npmjs.com/package/@uzolabs/sdk",
     email: "mailto:uzolabsxyz@gmail.com",
+    productHunt:
+      "https://www.producthunt.com/products/uzo-labs?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-uzo-labs",
   },
+  productHuntBadge:
+    "https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1267020&theme=light&t=1790998726597",
 } as const
 
 export const navLinks = [

@@ -1,43 +1,75 @@
 import { Database, LayoutTemplate, Package, Radio, type LucideIcon } from "lucide-react"
 import type { Status } from "@/components/status-badge"
+import { installCommand, sdkVersion } from "@/lib/network"
+import { site } from "@/lib/site"
+
+export type ProductLink = { label: string; href: string }
 
 export type Product = {
   slug: string
   name: string
   icon: LucideIcon
   status: Status
+  /** Shown next to the status, for things that are published. */
+  version?: string
   /** One line for cards. */
   summary: string
   /** A short paragraph for the products page. */
   detail: string
   includes: string[]
+  /** Items that are announced but not shipped yet. */
+  planned?: string[]
+  /** A command to copy, like an install or clone. */
+  command?: string
+  links?: ProductLink[]
 }
+
+export const templatesCommand = "npx giget gh:uzolabs/templates/token my-token"
 
 export const products: Product[] = [
   {
     slug: "sdk",
-    name: "uzo-sdk",
+    name: "@uzolabs/sdk",
     icon: Package,
-    status: "In progress",
-    summary: "Chain configs, contract addresses and typed helpers for viem and ethers.",
+    status: "Available",
+    version: `v${sdkVersion}`,
+    summary: "Chain definitions, contract addresses, typed ABIs and a BOTScan client, built on viem.",
     detail:
-      "One install gives your app the BOT Chain network definitions it needs, so you stop copying chain IDs and RPC URLs between projects.",
+      "One install gives your app the BOT Chain network definitions it needs, so you stop copying chain IDs and RPC URLs between projects. It never touches private keys.",
     includes: [
-      "Mainnet and testnet chain definitions",
-      "Known contract addresses, starting with Multicall3",
-      "Typed helpers for viem and ethers",
-      "Explorer links for transactions and addresses",
+      "`botChain` and `botChainTestnet` chain definitions for viem",
+      "Contract addresses and typed ABIs, including the BDEX V2 router",
+      "A BOTScan explorer client with no API key",
+      "Typed errors with stable codes",
+    ],
+    planned: ["BDEX helpers in 0.3.0", "Bridge helpers in 0.4.0", "Paymaster helpers in 0.5.0"],
+    command: installCommand,
+    links: [
+      { label: "npm", href: site.links.npm },
+      { label: "GitHub", href: site.links.sdkRepo },
+      { label: "Docs", href: site.links.docs },
     ],
   },
   {
     slug: "templates",
     name: "templates",
     icon: LayoutTemplate,
-    status: "In progress",
-    summary: "Clone-and-deploy starters: token, NFT, DEX, bridge, gasless app, AI agent.",
+    status: "Available",
+    summary: "Clone-and-deploy starters for a token, an NFT, a DEX integration and a gasless app.",
     detail:
-      "Starter repos that deploy to BOT Chain testnet as written, with the network config, scripts and a small frontend already wired up.",
-    includes: ["Token", "NFT", "DEX", "Bridge", "Gasless app", "AI agent"],
+      "Starter projects that deploy to BOT Chain testnet as written, with Foundry and Hardhat, deploy scripts and a small React frontend already wired up. They are for learning and have not been audited.",
+    includes: [
+      "Token: ERC-20 with permit and owner minting",
+      "NFT: ERC-721 with on-chain art and a mint page",
+      "DEX integration: BDEX quotes, swaps and liquidity",
+      "Gasless app: an ERC-2771 forwarder and relayer",
+    ],
+    planned: ["Bridge integration", "AI agent"],
+    command: templatesCommand,
+    links: [
+      { label: "GitHub", href: site.links.templatesRepo },
+      { label: "Docs", href: site.links.docs },
+    ],
   },
   {
     slug: "rpc",
@@ -47,11 +79,7 @@ export const products: Product[] = [
     summary: "RPC with eth_getLogs and WebSockets enabled.",
     detail:
       "The public mainnet RPC disables eth_getLogs, which breaks event feeds and indexers. Uzo RPC is planned to fill that gap.",
-    includes: [
-      "eth_getLogs enabled",
-      "WebSocket subscriptions",
-      "Endpoints for mainnet and testnet",
-    ],
+    includes: ["eth_getLogs enabled", "WebSocket subscriptions", "Endpoints for mainnet and testnet"],
   },
   {
     slug: "index",
@@ -59,12 +87,7 @@ export const products: Product[] = [
     icon: Database,
     status: "Planned",
     summary: "Hosted indexing, no node required.",
-    detail:
-      "Query contract events and history over an API instead of running and syncing your own node and indexer.",
-    includes: [
-      "Contract event indexing",
-      "Historical queries over an API",
-      "Designed to pair with Uzo RPC",
-    ],
+    detail: "Query contract events and history over an API instead of running and syncing your own node and indexer.",
+    includes: ["Contract event indexing", "Historical queries over an API", "Designed to pair with Uzo RPC"],
   },
 ]

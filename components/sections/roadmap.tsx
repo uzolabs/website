@@ -1,13 +1,14 @@
+import { Check } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import { Section } from "@/components/section"
 import { PathLineHorizontal, PathNode, PathSegmentVertical } from "@/components/uli/path-line"
-import { phases } from "@/lib/roadmap"
+import { phases, type PhaseItem } from "@/lib/roadmap"
 
 type PhaseBodyProps = {
   index: number
   title: string
   summary: string
-  items: string[]
+  items: PhaseItem[]
   detailed?: boolean
 }
 
@@ -22,10 +23,19 @@ function PhaseBody({ index, title, summary, items, detailed }: PhaseBodyProps) {
           detailed ? "mt-4 grid gap-2 border-t border-glass-border pt-4" : "mt-4 grid gap-2 text-muted-foreground"
         }
       >
-        {items.map((item) => (
-          <li key={item} className="flex gap-2.5">
-            <span aria-hidden="true" className="mt-[0.7em] size-1.5 shrink-0 rounded-full border border-primary/70" />
-            {item}
+        {items.map(({ label, shipped }) => (
+          <li key={label} className="flex gap-2.5">
+            <span aria-hidden="true" className="flex h-[1.5em] w-4 shrink-0 items-center justify-center">
+              {shipped ? (
+                <Check className="size-4 text-primary" />
+              ) : (
+                <span className="size-1.5 rounded-full border border-primary/70" />
+              )}
+            </span>
+            <span>
+              {label}
+              {shipped ? <span className="sr-only"> (shipped)</span> : null}
+            </span>
           </li>
         ))}
       </ul>

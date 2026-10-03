@@ -4,6 +4,7 @@ import { navLinks, site } from "@/lib/site"
 const pages = [...navLinks, { label: "Claim testnet", href: "/faucet" }]
 
 const external = [
+  { label: "Docs", href: site.links.docs },
   { label: "GitHub", href: site.links.github },
   { label: "X", href: site.links.x },
   { label: "npm", href: site.links.npm },
@@ -20,6 +21,21 @@ export function Footer() {
           <Link href="/" className="rounded-sm font-display text-[1.75rem] leading-none" aria-label="Uzo Labs home">
             {site.name}
           </Link>
+          <a
+            href={site.links.productHunt}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 block w-fit rounded-lg"
+          >
+            {/* Product Hunt serves this badge as a live SVG, so it stays a plain img. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              alt="Uzo Labs - The Infrastructure Layer for BOT Chain | Product Hunt"
+              width={250}
+              height={54}
+              src={site.productHuntBadge}
+            />
+          </a>
         </div>
 
         <nav aria-labelledby="footer-site">

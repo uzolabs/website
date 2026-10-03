@@ -38,4 +38,5 @@ export const contracts = {
 export const explorerName = "BOTScan"
 
 export const sdkPackage = "@uzolabs/sdk"
-export const installCommand = `npm i ${sdkPackage}`
+export const sdkVersion = "0.2.0"
+export const installCommand = `npm i ${sdkPackage} viem`
