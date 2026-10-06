@@ -33,6 +33,8 @@ export const networks = [mainnet, testnet] as const
 
 export const contracts = {
   multicall3: "0x47FA21f684bBAD707A53a0f9BE59F1422F46C265",
+  /** Test USDT on BOT Chain testnet ("Tether USD", 6 decimals). Testnet only. */
+  testnetUsdt: "0x75edC9335175Fc0552D51D48439F229c10420fe3",
 } as const
 
 export const explorerName = "BOTScan"

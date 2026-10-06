@@ -22,7 +22,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Testnet faucet
 
-The faucet is off until `FAUCET_PRIVATE_KEY` is set. See `.env.example`. Use a dedicated wallet that only holds testnet tBOT, never a mainnet key.
+The faucet is off until `FAUCET_PRIVATE_KEY` is set. See `.env.example`. Use a dedicated wallet that only holds testnet tBOT, never a mainnet key. It also hands out test USDT (`contracts.testnetUsdt` in `lib/network.ts`) from the faucet wallet's own balance, so keep that wallet topped up.
 
 ## License
 

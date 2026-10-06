@@ -1,17 +1,26 @@
 import { ArrowRight, ArrowUpRight, HeartHandshake } from "lucide-react"
 import Link from "next/link"
 import { DonationAddress } from "@/components/donation-address"
-import { FaucetForm } from "@/components/faucet-form"
+import { FaucetForm, type FaucetTokenOption } from "@/components/faucet-form"
 import { PageHeader } from "@/components/page-header"
 import { Reveal } from "@/components/reveal"
 import { StatusBadge } from "@/components/status-badge"
-import { cooldownHours, donationAddress, faucetAmount, faucetEnabled } from "@/lib/faucet"
+import {
+  cooldownHours,
+  donationAddress,
+  faucetAmount,
+  faucetEnabled,
+  usdtAddress,
+  usdtAmount,
+  usdtEnabled,
+  usdtSymbol,
+} from "@/lib/faucet"
 import { testnet } from "@/lib/network"
 import { faucetHref, pageMetadata, siteHref } from "@/lib/site"
 
 export const metadata = pageMetadata({
   title: "Testnet faucet",
-  description: `Claim test ${testnet.nativeToken} for BOT Chain testnet so you can deploy and try contracts without spending real funds.`,
+  description: `Claim test ${testnet.nativeToken} and test USDT for BOT Chain testnet so you can deploy and try contracts without spending real funds.`,
   path: faucetHref,
 })
 
@@ -21,6 +30,14 @@ function Bullet() {
   return <span aria-hidden="true" className="mt-[0.6em] size-1.5 shrink-0 rounded-full border border-primary/70" />
 }
 
+const tokens: FaucetTokenOption[] = [
+  { id: "tbot", symbol: testnet.nativeToken, amount: faucetAmount },
+  ...(usdtEnabled ? [{ id: "usdt" as const, symbol: usdtSymbol, amount: usdtAmount, contract: usdtAddress }] : []),
+]
+
+/** What people can donate back: whichever tokens the faucet hands out. */
+const donationToken = tokens.map((t) => t.symbol).join(" or ")
+
 export default function FaucetPage() {
   return (
     <>
@@ -28,10 +45,13 @@ export default function FaucetPage() {
         eyebrow="Testnet faucet"
         title={
           <>
-            Claim test <span className="text-primary">{testnet.nativeToken}.</span>
+            Claim test{" "}
+            <span className="text-primary">
+              {usdtEnabled ? `${testnet.nativeToken} and USDT.` : `${testnet.nativeToken}.`}
+            </span>
           </>
         }
-        lede={`Paste the wallet you will deploy from. ${testnet.nativeToken} only works on BOT Chain testnet (chain ${testnet.chainId}) and has no real value.`}
+        lede={`Paste the wallet you will deploy from. ${donationToken} only work${tokens.length > 1 ? "" : "s"} on BOT Chain testnet (chain ${testnet.chainId}) and ${tokens.length > 1 ? "have" : "has"} no real value.`}
       />
 
       <section aria-labelledby="claim-title" className="py-16 sm:py-24">
@@ -39,14 +59,14 @@ export default function FaucetPage() {
           <Reveal className="glass-strong rounded-3xl p-6 sm:p-10">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 id="claim-title" className="text-2xl font-bold">
-                Request {testnet.nativeToken}
+                Request test tokens
               </h2>
               {faucetEnabled ? null : <StatusBadge status="In progress" />}
             </div>
 
             {faucetEnabled ? (
               <div className="mt-6">
-                <FaucetForm amount={faucetAmount} token={testnet.nativeToken} donationAddress={donationAddress} />
+                <FaucetForm tokens={tokens} donationToken={donationToken} donationAddress={donationAddress} />
               </div>
             ) : (
               <p className="mt-4 text-muted-foreground">
@@ -64,12 +84,20 @@ export default function FaucetPage() {
             <ul className="mt-4 grid gap-3 text-muted-foreground">
               <li className="flex gap-3">
                 <Bullet />
-                One claim of {faucetAmount} {testnet.nativeToken} per wallet every {cooldownHours} hours.
+                {usdtEnabled
+                  ? `One claim of each token per wallet every ${cooldownHours} hours: ${faucetAmount} ${testnet.nativeToken} and ${usdtAmount} ${usdtSymbol}.`
+                  : `One claim of ${faucetAmount} ${testnet.nativeToken} per wallet every ${cooldownHours} hours.`}
               </li>
               <li className="flex gap-3">
                 <Bullet />
-                Wallets that already hold enough {testnet.nativeToken} are skipped, so there is more for everyone.
+                Wallets that already hold enough of a token are skipped, so there is more for everyone.
               </li>
+              {usdtEnabled ? (
+                <li className="flex gap-3">
+                  <Bullet />
+                  Moving {usdtSymbol} costs gas in {testnet.nativeToken}, so claim some {testnet.nativeToken} too.
+                </li>
+              ) : null}
               <li className="flex gap-3">
                 <Bullet />
                 <span>
@@ -104,15 +132,15 @@ export default function FaucetPage() {
                   <div>
                     <h2 className="text-lg font-bold">Help the next builder</h2>
                     <p className="mt-1 max-w-xl text-muted-foreground">
-                      Done testing? Send your unused {testnet.nativeToken} back to the faucet so others can claim. Every
+                      Done testing? Send your unused {donationToken} back to the faucet so others can claim. Every
                       top-up keeps it running.
                     </p>
                   </div>
                 </div>
                 <div className="min-w-0 lg:w-[30rem] lg:shrink-0">
-                  <DonationAddress address={donationAddress} token={testnet.nativeToken} chainId={testnet.chainId} />
+                  <DonationAddress address={donationAddress} token={donationToken} chainId={testnet.chainId} />
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Testnet {testnet.nativeToken} only (chain {testnet.chainId}). Never send mainnet BOT or other tokens
+                    Testnet {donationToken} only (chain {testnet.chainId}). Never send mainnet BOT or other tokens
                     here.
                   </p>
                 </div>

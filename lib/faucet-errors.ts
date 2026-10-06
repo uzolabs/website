@@ -1,7 +1,16 @@
 // Shared between the faucet API and the claim form, so it must stay free of server imports.
 
+/** Tokens the faucet can hand out: native tBOT and an ERC-20 test USDT. */
+export const faucetTokenIds = ["tbot", "usdt"] as const
+export type FaucetTokenId = (typeof faucetTokenIds)[number]
+
+export function isFaucetTokenId(value: unknown): value is FaucetTokenId {
+  return typeof value === "string" && (faucetTokenIds as readonly string[]).includes(value)
+}
+
 export type FaucetErrorCode =
   | "disabled"
+  | "token_unavailable"
   | "invalid_address"
   | "self_address"
   | "contract_address"
@@ -19,6 +28,10 @@ export const faucetErrors: Record<FaucetErrorCode, ErrorCopy> = {
     title: "The faucet is not on yet",
     hint: "Use the official BOT Chain faucet for now.",
     official: true,
+  },
+  token_unavailable: {
+    title: "That token is not available",
+    hint: "The faucet is not handing out this token right now. Pick another one.",
   },
   invalid_address: {
     title: "Wrong wallet address",
