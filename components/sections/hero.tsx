@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react"
 import { CopyButton } from "@/components/copy-button"
 import { easeOut } from "@/components/reveal"
 import { GitHubIcon } from "@/components/brand-icons"
+import { NewBadge } from "@/components/new-badge"
 import { StatusBadge } from "@/components/status-badge"
 import { HeroSpiral } from "@/components/uli/spiral"
 import { Button } from "@/components/ui/button"
@@ -26,6 +27,18 @@ export function Hero() {
       <HeroSpiral className="pointer-events-none absolute top-[-4rem] right-[-22rem] w-[46rem] max-w-none sm:right-[-16rem] sm:w-[54rem] lg:top-[-6rem] lg:right-[-10rem] lg:w-[60rem]" />
 
       <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-24 sm:px-6 sm:pt-24 lg:pt-28 lg:pb-32">
+        <motion.a
+          {...rise(0)}
+          href={site.links.deploy}
+          target="_blank"
+          rel="noreferrer"
+          className="glass mb-7 inline-flex max-w-full items-center gap-2.5 rounded-2xl py-1.5 pr-3.5 pl-1.5 text-sm text-foreground/90 transition-colors hover:bg-foreground/10 sm:rounded-full"
+        >
+          <NewBadge className="shrink-0 px-2 py-1 text-[0.65rem]" />
+          <span>Uzo Deploy: deploy a verified contract from your browser</span>
+          <ArrowRight className="size-3.5 shrink-0 text-primary" aria-hidden="true" />
+        </motion.a>
+
         <motion.h1
           {...rise(0.08)}
           id="hero-title"

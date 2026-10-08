@@ -5,9 +5,15 @@ export const site = {
   url: "https://uzolabs.xyz",
   title: "Uzo Labs: The developer path for BOT Chain",
   description:
-    "SDKs, templates and infrastructure that take developers from zero to shipped on BOT Chain. Built in Lagos.",
+    "SDKs, templates, a browser deploy tool and infrastructure that take developers from zero to shipped on BOT Chain. Built in Lagos.",
   links: {
     github: "https://github.com/uzolabs",
+    deploy: "https://deploy.uzolabs.xyz",
+    deployRepo: "https://github.com/uzolabs/uzo-deploy",
+    telegramChannel: "", // TODO(chidile): public Telegram channel URL, e.g. https://t.me/<channel>
+    telegramCommunity: "", // TODO(chidile): Telegram community/group invite URL
+    botChain: "https://botchain.ai",
+    botScan: "https://scan.botchain.ai",
     docs: "https://docs.uzolabs.xyz",
     sdkRepo: "https://github.com/uzolabs/uzo-sdk",
     templatesRepo: "https://github.com/uzolabs/templates",

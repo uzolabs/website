@@ -5,17 +5,22 @@ import { Section } from "@/components/section"
 import { StatusBadge } from "@/components/status-badge"
 import { UliCrescent } from "@/components/uli/crescent"
 import { products } from "@/lib/products"
+import { cn } from "@/lib/utils"
 
 /** Card grid. Each card links to its detail block on /products. */
 export function ProductGrid() {
   return (
     <ul className="grid gap-5 sm:grid-cols-2">
-      {products.map(({ slug, name, icon: Icon, status, summary }, i) => (
+      {products.map(({ slug, name, icon: Icon, status, statusNote, summary }, i) => (
         <Reveal
           as="li"
           key={slug}
-          delay={(i % 2) * 0.06}
-          className="glass group relative overflow-hidden rounded-2xl transition-shadow duration-300 hover:shadow-[0_0_48px_-12px_rgba(217,164,65,0.35)]"
+          delay={i === 0 ? 0 : ((i - 1) % 2) * 0.06}
+          className={cn(
+            "glass group relative overflow-hidden rounded-2xl transition-shadow duration-300 hover:shadow-[0_0_48px_-12px_rgba(217,164,65,0.35)]",
+            // Five cards in two columns: the first spans both so the grid stays even.
+            i === 0 && "sm:col-span-2",
+          )}
         >
           <Link href={`/products#${slug}`} className="block h-full rounded-2xl p-6 sm:p-8">
             <UliCrescent className="absolute -top-1 -right-1 size-16 text-primary/30 transition-colors duration-300 group-hover:text-primary/55" />
@@ -24,6 +29,7 @@ export function ProductGrid() {
                 <Icon className="size-5" aria-hidden="true" />
               </span>
               <StatusBadge status={status} />
+              {statusNote ? <span className="text-sm text-muted-foreground">{statusNote}</span> : null}
             </div>
             <h3 className="mt-5 font-mono text-xl font-medium">{name}</h3>
             <p className="mt-2 max-w-md text-muted-foreground">
@@ -41,8 +47,8 @@ export function Products() {
     <Section
       id="products"
       eyebrow="What we build"
-      title="Four tools, one path."
-      lede="The SDK and templates are ready to use today. Hosted infrastructure follows once the basics are solid."
+      title="Five tools, one path."
+      lede="Uzo Deploy, the SDK and templates are ready to use today. Hosted infrastructure follows once the basics are solid."
       action={{ href: "/products", label: "Explore products" }}
     >
       <ProductGrid />

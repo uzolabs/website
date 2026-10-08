@@ -9,7 +9,7 @@ import { QuickstartTabs } from "@/components/sections/quickstart"
 import { Button } from "@/components/ui/button"
 import { UliZigzag } from "@/components/uli/zigzag"
 import { explorerName, testnet } from "@/lib/network"
-import { faucetHref, pageMetadata } from "@/lib/site"
+import { faucetHref, pageMetadata, site } from "@/lib/site"
 
 export const metadata = pageMetadata({
   title: "Quickstart",
@@ -58,6 +58,21 @@ export default function QuickstartPage() {
             ))}
           </ol>
         </nav>
+        <aside className="glass mt-8 max-w-xl rounded-2xl px-5 py-4 text-[0.95rem] leading-relaxed">
+          <span className="font-medium text-primary">No setup?</span>{" "}
+          <span className="text-muted-foreground">
+            Deploy a token on testnet straight from your browser with{" "}
+            <a
+              href={site.links.deploy}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-sm font-medium text-foreground underline underline-offset-4 hover:text-primary"
+            >
+              Uzo Deploy
+            </a>
+            . Use the steps below when you want your own code.
+          </span>
+        </aside>
       </PageHeader>
 
       <Section

@@ -27,12 +27,18 @@ export const phases: Phase[] = [
       { label: "Hardhat and Foundry quickstarts", shipped: true },
       { label: "Contract verification guide", shipped: true },
       { label: "Starter templates", shipped: true },
+      { label: "Uzo Deploy: browser deploys with automatic verification", shipped: true },
     ],
   },
   {
     title: "Hackathon ready",
     summary: "Templates for the builds people reach for when the clock is running.",
-    items: [{ label: "AI agent template" }, { label: "Paymaster tutorial" }, { label: "Indexer starter" }],
+    items: [
+      { label: "AI agent template" },
+      { label: "Paymaster tutorial" },
+      { label: "Indexer starter" },
+      { label: "Agent Vault in Uzo Deploy" },
+    ],
   },
   {
     title: "Run the rails",

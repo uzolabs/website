@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 import { Menu } from "lucide-react"
 import { GitHubIcon } from "@/components/brand-icons"
+import { NewBadge } from "@/components/new-badge"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
@@ -25,19 +26,6 @@ function Wordmark() {
     >
       <span className="font-display text-[1.75rem] leading-none">Uzo</span>
     </Link>
-  )
-}
-
-function NewBadge({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn(
-        "pointer-events-none rounded-full bg-primary px-1.5 py-px text-[0.6rem] leading-none font-bold tracking-wide text-primary-foreground uppercase",
-        className,
-      )}
-    >
-      New
-    </span>
   )
 }
 
@@ -68,13 +56,23 @@ export function Nav() {
             ))}
             <NavigationMenuItem>
               <NavigationMenuLink
-                href={site.links.docs}
+                href={site.links.deploy}
                 target="_blank"
                 rel="noreferrer"
                 className="relative rounded-full px-3.5 py-2 text-[0.95rem] text-muted-foreground hover:text-foreground"
               >
-                Docs
+                Deploy
                 <NewBadge className="absolute -top-0.5 -right-1.5" />
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                href={site.links.docs}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full px-3.5 py-2 text-[0.95rem] text-muted-foreground hover:text-foreground"
+              >
+                Docs
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -124,13 +122,21 @@ export function Nav() {
                   </Link>
                 ))}
                 <a
-                  href={site.links.docs}
+                  href={site.links.deploy}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-2 rounded-xl px-3 py-3 hover:bg-muted"
                 >
-                  Docs
+                  Deploy
                   <NewBadge />
+                </a>
+                <a
+                  href={site.links.docs}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-xl px-3 py-3 hover:bg-muted"
+                >
+                  Docs
                 </a>
                 <a
                   href={site.links.github}

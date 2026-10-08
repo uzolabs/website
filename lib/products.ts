@@ -1,9 +1,14 @@
-import { Database, LayoutTemplate, Package, Radio, type LucideIcon } from "lucide-react"
+import { Database, LayoutTemplate, Package, Radio, Rocket, type LucideIcon } from "lucide-react"
 import type { Status } from "@/components/status-badge"
 import { installCommand, sdkVersion } from "@/lib/network"
 import { site } from "@/lib/site"
 
-export type ProductLink = { label: string; href: string }
+export type ProductLink = {
+  label: string
+  href: string
+  /** Rendered as the main button instead of a text link. */
+  primary?: boolean
+}
 
 export type Product = {
   slug: string
@@ -12,6 +17,8 @@ export type Product = {
   status: Status
   /** Shown next to the status, for things that are published. */
   version?: string
+  /** A short qualifier beside the status, like where it runs. Words must match the product itself. */
+  statusNote?: string
   /** One line for cards. */
   summary: string
   /** A short paragraph for the products page. */
@@ -27,6 +34,29 @@ export type Product = {
 export const templatesCommand = "npx giget gh:uzolabs/templates/token my-token"
 
 export const products: Product[] = [
+  {
+    slug: "deploy",
+    name: "Uzo Deploy",
+    icon: Rocket,
+    status: "Available",
+    // The app offers Testnet and Mainnet, but no templates are available on Mainnet yet.
+    statusNote: "Testnet only",
+    summary: "Deploy a verified contract to BOT Chain from your browser.",
+    detail:
+      "Connect a wallet, pick a tested template, deploy, and get it verified on BOTScan in one flow. No fees, no custody, and Uzo holds no admin keys over anything you deploy. Templates are tested, not audited.",
+    includes: [
+      "Token: fixed-supply ERC-20 with permit and burn",
+      "NFT collection: ERC-721 with a capped supply, owner minting, optional royalties and freezable metadata",
+      "Tip jar: a shareable page for BOT or USDT tips with a short message, paid straight to the recipient",
+      "Automatic verification on BOTScan",
+    ],
+    planned: ["Agent Vault: a spending-limited wallet for AI agents"],
+    links: [
+      { label: "Open Uzo Deploy", href: site.links.deploy, primary: true },
+      { label: "Docs", href: `${site.links.docs}/deploy/overview` },
+      { label: "GitHub", href: site.links.deployRepo },
+    ],
+  },
   {
     slug: "sdk",
     name: "@uzolabs/sdk",

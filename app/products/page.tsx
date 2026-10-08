@@ -11,12 +11,13 @@ import { Button } from "@/components/ui/button"
 import { UliCrescent } from "@/components/uli/crescent"
 import { UliZigzag } from "@/components/uli/zigzag"
 import { products } from "@/lib/products"
+import { hasHref } from "@/lib/utils"
 import { pageMetadata } from "@/lib/site"
 
 export const metadata = pageMetadata({
   title: "Products",
   description:
-    "@uzolabs/sdk, starter templates, Uzo RPC and Uzo Index: the tools Uzo Labs builds for BOT Chain developers, with honest status for each.",
+    "Uzo Deploy, @uzolabs/sdk, starter templates, Uzo RPC and Uzo Index: the tools Uzo Labs builds for BOT Chain developers, with honest status for each.",
   path: "/products",
 })
 
@@ -27,10 +28,10 @@ export default function ProductsPage() {
         eyebrow="Products"
         title={
           <>
-            Four tools, <span className="text-primary">one path.</span>
+            Five tools, <span className="text-primary">one path.</span>
           </>
         }
-        lede="The SDK and templates are out now because they unblock you today. Hosted infrastructure follows once the basics are solid."
+        lede="Uzo Deploy, the SDK and templates are out now because they unblock you today. Hosted infrastructure follows once the basics are solid."
       >
         <Button
           asChild
@@ -46,7 +47,7 @@ export default function ProductsPage() {
       <section aria-label="Product details" className="py-16 sm:py-24">
         <ul className="mx-auto grid max-w-6xl gap-6 px-4 sm:px-6">
           {products.map(
-            ({ slug, name, icon: Icon, status, version, summary, detail, includes, planned, command, links }) => (
+            ({ slug, name, icon: Icon, status, statusNote, version, summary, detail, includes, planned, command, links }) => (
               <Reveal as="li" key={slug}>
                 <article
                   id={slug}
@@ -56,11 +57,12 @@ export default function ProductsPage() {
                   <UliCrescent className="absolute top-2 right-2 size-20 text-primary/25" />
                   <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-12">
                     <div className="min-w-0">
-                      <div className="flex items-center gap-3">
+                      <div className="flex flex-wrap items-center gap-3">
                         <span className="flex size-11 items-center justify-center rounded-full border border-glass-border bg-foreground/5 text-primary">
                           <Icon className="size-5" aria-hidden="true" />
                         </span>
                         <StatusBadge status={status} />
+                        {statusNote ? <span className="text-sm text-muted-foreground">{statusNote}</span> : null}
                         {version ? <span className="font-mono text-sm text-muted-foreground">{version}</span> : null}
                       </div>
                       <h2 id={`${slug}-title`} className="mt-5 font-mono text-2xl font-medium sm:text-[1.75rem]">
@@ -84,19 +86,31 @@ export default function ProductsPage() {
                         </div>
                       ) : null}
                       {links ? (
-                        <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
-                          {links.map((link) => (
+                        <ul className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+                          {links.filter(hasHref).map((link) => (
                             <li key={link.label}>
-                              <a
-                                href={link.href}
-                                target="_blank"
-                                rel="noreferrer"
-                                aria-label={`${name} on ${link.label}`}
-                                className="inline-flex items-center gap-1 rounded-sm font-medium text-primary underline-offset-4 hover:underline"
-                              >
-                                {link.label}
-                                <ArrowUpRight className="size-4" aria-hidden="true" />
-                              </a>
+                              {link.primary ? (
+                                <Button
+                                  asChild
+                                  className="h-11 rounded-full px-6 font-medium hover:bg-primary hover:shadow-[0_0_32px_-4px_rgba(217,164,65,0.55)]"
+                                >
+                                  <a href={link.href} target="_blank" rel="noreferrer">
+                                    {link.label}
+                                    <ArrowUpRight className="size-4" aria-hidden="true" />
+                                  </a>
+                                </Button>
+                              ) : (
+                                <a
+                                  href={link.href}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  aria-label={`${name} on ${link.label}`}
+                                  className="inline-flex items-center gap-1 rounded-sm font-medium text-primary underline-offset-4 hover:underline"
+                                >
+                                  {link.label}
+                                  <ArrowUpRight className="size-4" aria-hidden="true" />
+                                </a>
+                              )}
                             </li>
                           ))}
                         </ul>
