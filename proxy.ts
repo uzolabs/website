@@ -27,6 +27,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Pages only: API routes, build output and metadata files pass straight through.
-  matcher: ["/((?!api/|_next/|opengraph-image|icon\.svg|favicon\.ico|fonts/).*)"],
+  // Pages only: API routes, build output and metadata files pass straight through,
+  // so robots.txt and sitemap.xml are served as-is on the faucet host too.
+  matcher: ["/((?!api/|_next/|opengraph-image|icon\.svg|favicon\.ico|robots\.txt|sitemap\.xml|fonts/).*)"],
 }

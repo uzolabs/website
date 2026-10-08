@@ -49,6 +49,19 @@ export const metadata: Metadata = {
     title: site.title,
     description: site.description,
   },
+  // Search Console is verified by DNS; this meta tag is an optional backup.
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } }
+    : {}),
+}
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/icon.svg`,
+  sameAs: [site.links.x, site.links.github, site.links.telegramChannel].filter((href) => href.trim() !== ""),
 }
 
 export const viewport: Viewport = {
@@ -64,6 +77,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       {/* Extensions like Grammarly add attributes to body before React loads. */}
       <body className="min-h-dvh" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          // Escape "<" so the JSON can never close the script tag early.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c") }}
+        />
         <Background />
         <TooltipProvider delayDuration={200}>
           <a
