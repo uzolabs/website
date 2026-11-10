@@ -62,6 +62,7 @@ export const menuCards: { title: string; line: string; href: string; art: ArtNam
 export const navWords: NavLink[] = [
   { label: "Quickstart", href: "/quickstart" },
   { label: "Roadmap", href: "/roadmap" },
+  { label: "Papers", href: "/papers" },
   { label: "Faucet", href: faucetHref },
 ]
 
