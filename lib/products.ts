@@ -1,5 +1,5 @@
 import { Database, LayoutTemplate, Package, Radio, Rocket, type LucideIcon } from "lucide-react"
-import type { Status } from "@/components/status-badge"
+import type { Status } from "@/lib/home"
 import { installCommand, sdkVersion } from "@/lib/network"
 import { site } from "@/lib/site"
 
@@ -50,7 +50,7 @@ export const products: Product[] = [
       "Tip jar: a shareable page for BOT or USDT tips with a short message, paid straight to the recipient",
       "Automatic verification on BOTScan",
       "My contracts: find and manage everything you deployed",
-      "Practise free on testnet before you deploy on mainnet",
+      "Practice free on testnet before you deploy on mainnet",
     ],
     planned: ["Agent Vault: a spending-limited wallet for AI agents"],
     links: [
@@ -121,5 +121,21 @@ export const products: Product[] = [
     summary: "Hosted indexing, no node required.",
     detail: "Query contract events and history over an API instead of running and syncing your own node and indexer.",
     includes: ["Contract event indexing", "Historical queries over an API", "Designed to pair with Uzo RPC"],
+  },
+]
+
+/** Why the tools exist, shown on /products. */
+export const problems = [
+  {
+    title: "Scattered setup",
+    body: "Network details are spread across many pages, so every new project starts with a hunt.",
+  },
+  {
+    title: "No ready configs",
+    body: "Every builder writes their own chain config for viem, ethers, Hardhat and Foundry.",
+  },
+  {
+    title: "Blocked event queries",
+    body: "`eth_getLogs` is disabled on the public mainnet RPC, so indexing and event feeds break.",
   },
 ]

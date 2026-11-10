@@ -1,18 +1,12 @@
-import { ArrowRight, ArrowUpRight } from "lucide-react"
-import Link from "next/link"
-import { CopyButton } from "@/components/copy-button"
-import { WithCode } from "@/components/inline-code"
-import { PageHeader } from "@/components/page-header"
-import { Reveal } from "@/components/reveal"
-import { Cta } from "@/components/sections/cta"
-import { Problem } from "@/components/sections/problem"
-import { StatusBadge } from "@/components/status-badge"
-import { Button } from "@/components/ui/button"
-import { UliCrescent } from "@/components/uli/crescent"
-import { UliZigzag } from "@/components/uli/zigzag"
-import { products } from "@/lib/products"
-import { hasHref } from "@/lib/utils"
+import { Arrow, Art, external, href } from "@/components/kit/bits"
+import { CopyButton } from "@/components/kit/copy"
+import { PageHead } from "@/components/kit/page-head"
+import { StatusBadge } from "@/components/kit/status"
+import { WithCode } from "@/components/kit/with-code"
+import type { ArtName } from "@/lib/art"
+import { problems, products, type Product } from "@/lib/products"
 import { pageMetadata } from "@/lib/site"
+import { hasHref } from "@/lib/utils"
 
 export const metadata = pageMetadata({
   title: "Products",
@@ -21,154 +15,204 @@ export const metadata = pageMetadata({
   path: "/products",
 })
 
+const listTitle = (status: Product["status"]) =>
+  status === "Planned" ? "What is planned" : status === "Available" ? "What ships today" : "What it covers"
+
+function Meta({ product }: { product: Product }) {
+  return (
+    <p className="meta">
+      <StatusBadge status={product.status} />
+      {product.statusNote ? <span>{product.statusNote}</span> : null}
+      {product.version ? <span className="mono">{product.version}</span> : null}
+    </p>
+  )
+}
+
+function Links({ product }: { product: Product }) {
+  const links = product.links?.filter(hasHref)
+  if (!links?.length) return null
+  return (
+    <div className="row">
+      {links.map((link) =>
+        link.primary ? (
+          <a key={link.label} className="btn btn--primary" href={link.href} {...external(link.href)}>
+            {link.label}
+            <Arrow />
+          </a>
+        ) : (
+          <a
+            key={link.label}
+            className="btn btn--glass"
+            href={link.href}
+            {...external(link.href)}
+            aria-label={`${product.name} on ${link.label}`}
+          >
+            {link.label}
+          </a>
+        ),
+      )}
+    </div>
+  )
+}
+
+function Lists({ product }: { product: Product }) {
+  return (
+    <div className="product__aside">
+      <h3 className="label">{listTitle(product.status)}</h3>
+      <ul className="ticks">
+        {product.includes.map((item) => (
+          <li key={item}>
+            <span><WithCode text={item} /></span>
+          </li>
+        ))}
+      </ul>
+      {product.planned ? (
+        <>
+          <h3 className="label">Coming next</h3>
+          <ul className="ticks is-next">
+            {product.planned.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </>
+      ) : null}
+    </div>
+  )
+}
+
+const shipping = products.filter((p) => p.status !== "Planned")
+const planned = products.filter((p) => p.status === "Planned")
+
 export default function ProductsPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Products"
+      <PageHead
+        kicker="Products"
         title={
           <>
-            Five tools, <span className="text-primary">one path.</span>
+            Five tools, <span className="grad">one path.</span>
           </>
         }
-        lede="Uzo Deploy, the SDK and templates are out now because they unblock you today. Hosted infrastructure follows once the basics are solid."
-      >
-        <Button
-          asChild
-          className="h-12 rounded-full px-7 text-base font-medium hover:bg-primary hover:shadow-[0_0_32px_-4px_rgba(217,164,65,0.55)]"
-        >
-          <Link href="/quickstart">
+        lead="Uzo Deploy, the SDK and templates are out now because they unblock you today. Hosted infrastructure follows once the basics are solid."
+        art="templates"
+        actions={
+          <a className="btn btn--primary" href={href("/quickstart")}>
             Start building
-            <ArrowRight className="size-4" />
-          </Link>
-        </Button>
-      </PageHeader>
+            <Arrow />
+          </a>
+        }
+        facts={[
+          ...shipping.map((p) => ({ label: p.status, value: <a href={`#${p.slug}`}>{p.name}</a> })),
+          {
+            label: "Planned",
+            value: <a href={`#${planned[0]?.slug}`}>{planned.map((p) => p.name).join(" and ")}</a>,
+          },
+        ]}
+      />
 
-      <section aria-label="Product details" className="py-16 sm:py-24">
-        <ul className="mx-auto grid max-w-6xl gap-6 px-4 sm:px-6">
-          {products.map(
-            ({ slug, name, icon: Icon, status, statusNote, version, summary, detail, includes, planned, command, links }) => (
-              <Reveal as="li" key={slug}>
-                <article
-                  id={slug}
-                  aria-labelledby={`${slug}-title`}
-                  className="glass relative scroll-mt-28 overflow-hidden rounded-3xl p-6 sm:p-10"
-                >
-                  <UliCrescent className="absolute top-2 right-2 size-20 text-primary/25" />
-                  <div className="grid grid-cols-1 gap-8 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:gap-12">
-                    <div className="min-w-0">
-                      <div className="flex flex-wrap items-center gap-3">
-                        <span className="flex size-11 items-center justify-center rounded-full border border-glass-border bg-foreground/5 text-primary">
-                          <Icon className="size-5" aria-hidden="true" />
-                        </span>
-                        <StatusBadge status={status} />
-                        {statusNote ? <span className="text-sm text-muted-foreground">{statusNote}</span> : null}
-                        {version ? <span className="font-mono text-sm text-muted-foreground">{version}</span> : null}
-                      </div>
-                      <h2 id={`${slug}-title`} className="mt-5 font-mono text-2xl font-medium sm:text-[1.75rem]">
-                        {name}
-                      </h2>
-                      <p className="mt-3 text-lg text-foreground/90">
-                        <WithCode text={summary} />
-                      </p>
-                      <p className="mt-3 text-muted-foreground">
-                        <WithCode text={detail} />
-                      </p>
-                      {command ? (
-                        <div className="mt-6 flex w-fit max-w-full items-center justify-between gap-3 rounded-xl border border-glass-border bg-[#100e0c]/80 py-2 pr-2 pl-4">
-                          <code className="overflow-x-auto font-mono text-[0.95rem] whitespace-nowrap">
-                            <span className="text-primary select-none" aria-hidden="true">
-                              ${" "}
-                            </span>
-                            {command}
-                          </code>
-                          <CopyButton value={command} label={slug === "sdk" ? "install command" : "clone command"} />
-                        </div>
-                      ) : null}
-                      {links ? (
-                        <ul className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
-                          {links.filter(hasHref).map((link) => (
-                            <li key={link.label}>
-                              {link.primary ? (
-                                <Button
-                                  asChild
-                                  className="h-11 rounded-full px-6 font-medium hover:bg-primary hover:shadow-[0_0_32px_-4px_rgba(217,164,65,0.55)]"
-                                >
-                                  <a href={link.href} target="_blank" rel="noreferrer">
-                                    {link.label}
-                                    <ArrowUpRight className="size-4" aria-hidden="true" />
-                                  </a>
-                                </Button>
-                              ) : (
-                                <a
-                                  href={link.href}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  aria-label={`${name} on ${link.label}`}
-                                  className="inline-flex items-center gap-1 rounded-sm font-medium text-primary underline-offset-4 hover:underline"
-                                >
-                                  {link.label}
-                                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                                </a>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-                    </div>
-
-                    <div className="md:border-l md:border-glass-border md:pl-12">
-                      <h3 className="text-sm font-medium tracking-[0.14em] text-muted-foreground uppercase">
-                        {status === "Planned"
-                          ? "What is planned"
-                          : status === "Available"
-                            ? "What ships today"
-                            : "What it covers"}
-                      </h3>
-                      <ul className="mt-4 grid gap-3">
-                        {includes.map((item) => (
-                          <li key={item} className="flex gap-3">
-                            <span
-                              aria-hidden="true"
-                              className="mt-[0.6em] size-1.5 shrink-0 rounded-full border border-primary/70"
-                            />
-                            <span>
-                              <WithCode text={item} />
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                      {planned ? (
-                        <>
-                          <h3 className="mt-8 text-sm font-medium tracking-[0.14em] text-muted-foreground uppercase">
-                            Coming next
-                          </h3>
-                          <ul className="mt-4 grid gap-3 text-muted-foreground">
-                            {planned.map((item) => (
-                              <li key={item} className="flex gap-3">
-                                <span
-                                  aria-hidden="true"
-                                  className="mt-[0.6em] size-1.5 shrink-0 rounded-full border border-foreground/30"
-                                />
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </>
-                      ) : null}
-                    </div>
-                  </div>
-                </article>
-              </Reveal>
-            ),
-          )}
-        </ul>
+      <section className="section" id="problem" aria-labelledby="problem-h">
+        <div className="wrap">
+          <div className="head">
+            <h2 id="problem-h">
+              The pieces are there. <span className="muted">The path is not.</span>
+            </h2>
+            <p className="lead">
+              Building on BOT Chain today means stitching things together before you write a line of your app.
+            </p>
+          </div>
+          <ul className="grid-3">
+            {problems.map((p, i) => (
+              <li key={p.title} className="problem glass">
+                <span className="problem__n">0{i + 1}</span>
+                <h3>{p.title}</h3>
+                <p>
+                  <WithCode text={p.body} />
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
-      <UliZigzag />
-      <Problem />
-      <UliZigzag />
-      <Cta />
+      <section className="section" aria-labelledby="shipping-h">
+        <div className="wrap">
+          <div className="head">
+            <p className="label">Available</p>
+            <h2 id="shipping-h">
+              Out today. <span className="muted">Use them on testnet or mainnet.</span>
+            </h2>
+          </div>
+          {shipping.map((product) => (
+            <article
+              className="product glass"
+              id={product.slug}
+              key={product.slug}
+              aria-labelledby={`${product.slug}-h`}
+            >
+              <div className="product__main">
+                <div className="product__title">
+                  <Art name={product.slug as ArtName} sizes="96px" />
+                  <h2 id={`${product.slug}-h`}>{product.name}</h2>
+                </div>
+                <Meta product={product} />
+                <p className="lead">
+                  <WithCode text={product.summary} />
+                </p>
+                <p>
+                  <WithCode text={product.detail} />
+                </p>
+                {product.command ? (
+                  <p className="cmd">
+                    <code>{product.command}</code>
+                    <CopyButton
+                      value={product.command}
+                      label={product.slug === "sdk" ? "install command" : "clone command"}
+                    />
+                  </p>
+                ) : null}
+                <Links product={product} />
+              </div>
+              <Lists product={product} />
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section" aria-labelledby="planned-h">
+        <div className="wrap">
+          <div className="head">
+            <p className="label">Planned</p>
+            <h2 id="planned-h">
+              Hosted infrastructure. <span className="muted">Next on the road.</span>
+            </h2>
+            <p className="lead">These follow once the basics are solid. Neither is available today.</p>
+          </div>
+          <div className="grid-2">
+            {planned.map((product) => (
+              <article
+                className="card card--planned glass"
+                id={product.slug}
+                key={product.slug}
+                aria-labelledby={`${product.slug}-h`}
+              >
+                <Art name={product.slug as ArtName} className="card__art" sizes="132px" />
+                <Meta product={product} />
+                <h3 id={`${product.slug}-h`}>{product.name}</h3>
+                <p>
+                  <WithCode text={product.detail} />
+                </p>
+                <ul className="ticks is-next">
+                  {product.includes.map((item) => (
+                    <li key={item}>
+                      <span><WithCode text={item} /></span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   )
 }

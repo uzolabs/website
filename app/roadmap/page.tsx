@@ -1,10 +1,7 @@
-import { PageHeader } from "@/components/page-header"
-import { Section } from "@/components/section"
-import { Cta } from "@/components/sections/cta"
-import { Principles } from "@/components/sections/principles"
-import { RoadmapPath } from "@/components/sections/roadmap"
-import { UliZigzag } from "@/components/uli/zigzag"
-import { site, pageMetadata } from "@/lib/site"
+import { external } from "@/components/kit/bits"
+import { PageHead } from "@/components/kit/page-head"
+import { phases, principles } from "@/lib/roadmap"
+import { pageMetadata, site } from "@/lib/site"
 
 export const metadata = pageMetadata({
   title: "Roadmap",
@@ -14,45 +11,87 @@ export const metadata = pageMetadata({
 })
 
 export default function RoadmapPage() {
+  const shipped = phases.flatMap((p) => p.items).filter((item) => item.shipped).length
+  const total = phases.flatMap((p) => p.items).length
+
   return (
     <>
-      <PageHeader
-        eyebrow="Roadmap"
+      <PageHead
+        kicker="Roadmap"
         title={
           <>
-            One road, <span className="text-primary">four stretches.</span>
+            One road, <span className="grad">four stretches.</span>
           </>
         }
-        lede={
+        lead={
           <>
-            Each phase unlocks the next. There are no dates here, because we would rather ship than promise. Follow
+            Each phase builds on the one before. There are no dates here, because we would rather ship than promise. Follow
             progress on{" "}
-            <a
-              href={site.links.github}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-sm text-foreground underline underline-offset-4 hover:text-primary"
-            >
+            <a className="link" href={site.links.github} {...external(site.links.github)}>
               GitHub
             </a>
             .
           </>
         }
+        art="roadmap"
+        facts={phases.map((phase, i) => ({ label: `Phase ${i + 1}`, value: phase.title }))}
       />
 
-      <Section
-        id="phases"
-        eyebrow="The phases"
-        title="Where the road goes."
-        lede="Basics first, then guides, then templates, then hosted infrastructure."
-      >
-        <RoadmapPath detailed />
-      </Section>
+      <section className="section" id="phases" aria-labelledby="phases-h">
+        <div className="wrap">
+          <div className="head head--split">
+            <h2 id="phases-h">
+              Where the road goes. <span className="muted">Lit squares have shipped.</span>
+            </h2>
+            <p className="muted">
+              {shipped} of {total} items have shipped.
+            </p>
+          </div>
+          <ol className="grid-2">
+            {phases.map((phase, i) => {
+              const done = phase.items.filter((item) => item.shipped).length
+              return (
+                <li key={phase.title} className="phase glass">
+                  <p className="label">
+                    Phase {i + 1} · {done} of {phase.items.length} shipped
+                  </p>
+                  <h3>{phase.title}</h3>
+                  <p>{phase.summary}</p>
+                  <div className="bar" aria-hidden="true">
+                    <i style={{ width: `${(done / phase.items.length) * 100}%` }} />
+                  </div>
+                  <ul className="road">
+                    {phase.items.map((item) => (
+                      <li key={item.label} className={item.shipped ? "is-done" : undefined}>
+                        {item.label}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              )
+            })}
+          </ol>
+        </div>
+      </section>
 
-      <UliZigzag />
-      <Principles />
-      <UliZigzag />
-      <Cta />
+      <section className="section" id="principles" aria-labelledby="principles-h">
+        <div className="wrap">
+          <div className="head">
+            <h2 id="principles-h">
+              How we walk it. <span className="muted">The rules behind every phase.</span>
+            </h2>
+          </div>
+          <ul className="grid-3">
+            {principles.map((p, i) => (
+              <li key={p.title} className="problem glass">
+                <span className="problem__n">0{i + 1}</span>
+                <h3>{p.title}</h3>
+                <p>{p.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
     </>
   )
 }

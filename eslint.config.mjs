@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored design kit and its skill: third-party scripts, linted upstream.
+    ".claude/**",
+    ".taste-skill/**",
+    "public/assets/**",
   ]),
 ]);
 

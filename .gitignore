@@ -51,3 +51,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# taste-skill scratch output; keep only the Blender scripts that rebuild public/img/3d
+.taste-skill/*
+!.taste-skill/blender/
+.taste-skill/blender/*
+!.taste-skill/blender/render.py
+!.taste-skill/blender/towebp.mjs
+!.taste-skill/blender/sheet.mjs

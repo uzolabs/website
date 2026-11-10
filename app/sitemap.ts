@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     [`${site.url}/products`, "weekly"],
     [`${site.url}/quickstart`, "monthly"],
     [`${site.url}/roadmap`, "monthly"],
+    [`${site.url}/papers`, "monthly"],
     [faucetOnSubdomain ? `${faucetOrigin}/` : `${site.url}/faucet`, "monthly"],
   ]
   return pages.map(([url, changeFrequency]) => ({ url, lastModified, changeFrequency }))

@@ -46,3 +46,23 @@ export const phases: Phase[] = [
     items: [{ label: "Uzo RPC as a hosted service" }, { label: "Uzo Index as a hosted service" }],
   },
 ]
+
+/** How Uzo Labs works, shown under the phases on /roadmap. */
+export const principles = [
+  {
+    title: "Ship what works",
+    body: "Snippets and templates should run on BOT Chain as written. If one does not, that is a bug we fix.",
+  },
+  {
+    title: "Honest status",
+    body: "In progress means in progress. Nothing is called available until you can use it today.",
+  },
+  {
+    title: "Open by default",
+    body: "Code and configs live in public repos, and gaps are tracked in the open.",
+  },
+  {
+    title: "BOT Chain first, never BOT Chain only",
+    body: "Built for BOT Chain, on standard EVM tooling, so what you learn carries to any chain.",
+  },
+]

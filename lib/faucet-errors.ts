@@ -21,13 +21,13 @@ export type FaucetErrorCode =
   | "send_failed"
   | "offline"
 
-type ErrorCopy = { title: string; hint: string; donate?: boolean; official?: boolean }
+type ErrorCopy = { title: string; hint: string; donate?: boolean; botFaucet?: boolean }
 
 export const faucetErrors: Record<FaucetErrorCode, ErrorCopy> = {
   disabled: {
     title: "The faucet is not on yet",
-    hint: "Use the official BOT Chain faucet for now.",
-    official: true,
+    hint: "Use the BOT Chain faucet for now.",
+    botFaucet: true,
   },
   token_unavailable: {
     title: "That token is not available",
@@ -47,8 +47,8 @@ export const faucetErrors: Record<FaucetErrorCode, ErrorCopy> = {
   },
   cooldown: {
     title: "Cooldown still running",
-    hint: "Each wallet and connection can claim once per cooldown. Come back later, or try the official faucet.",
-    official: true,
+    hint: "Each wallet and connection can claim once per cooldown. Come back later, or try the BOT Chain faucet.",
+    botFaucet: true,
   },
   has_balance: {
     title: "You already have enough",
@@ -58,7 +58,7 @@ export const faucetErrors: Record<FaucetErrorCode, ErrorCopy> = {
     title: "The faucet is running dry",
     hint: "There is not enough left to send and cover gas. If you have spare test tokens, a donation refills it for everyone.",
     donate: true,
-    official: true,
+    botFaucet: true,
   },
   network_error: {
     title: "Testnet is not responding",
