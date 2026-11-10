@@ -39,16 +39,18 @@ export const products: Product[] = [
     name: "Uzo Deploy",
     icon: Rocket,
     status: "Available",
-    // The app offers Testnet and Mainnet, but no templates are available on Mainnet yet.
-    statusNote: "Testnet only",
+    // Matches the app: starts on mainnet, with testnet one switch away.
+    statusNote: "Mainnet and testnet",
     summary: "Deploy a verified contract to BOT Chain from your browser.",
     detail:
-      "Connect a wallet, pick a tested template, deploy, and get it verified on BOTScan in one flow. No fees, no custody, and Uzo holds no admin keys over anything you deploy. Templates are tested, not audited.",
+      "Connect a wallet, pick a tested template, deploy, and get it verified on BOTScan in one flow. Each deploy costs gas plus a fixed 0.1 BOT fee, shown before you sign. No custody, and Uzo holds no admin keys over anything you deploy. Templates are tested, not audited.",
     includes: [
       "Token: fixed-supply ERC-20 with permit and burn",
       "NFT collection: ERC-721 with a capped supply, owner minting, optional royalties and freezable metadata",
       "Tip jar: a shareable page for BOT or USDT tips with a short message, paid straight to the recipient",
       "Automatic verification on BOTScan",
+      "My contracts: find and manage everything you deployed",
+      "Practise free on testnet before you deploy on mainnet",
     ],
     planned: ["Agent Vault: a spending-limited wallet for AI agents"],
     links: [

@@ -61,7 +61,7 @@ export default function QuickstartPage() {
         <aside className="glass mt-8 max-w-xl rounded-2xl px-5 py-4 text-[0.95rem] leading-relaxed">
           <span className="font-medium text-primary">No setup?</span>{" "}
           <span className="text-muted-foreground">
-            Deploy a token on testnet straight from your browser with{" "}
+            Deploy a token to BOT Chain straight from your browser with{" "}
             <a
               href={site.links.deploy}
               target="_blank"

@@ -10,7 +10,7 @@ export const site = {
     github: "https://github.com/uzolabs",
     deploy: "https://deploy.uzolabs.xyz",
     deployRepo: "https://github.com/uzolabs/uzo-deploy",
-    telegramChannel: "", // TODO(chidile): public Telegram channel URL, e.g. https://t.me/<channel>
+    telegramChannel: "https://t.me/uzolabs",
     telegramCommunity: "", // TODO(chidile): Telegram community/group invite URL
     botChain: "https://botchain.ai",
     botScan: "https://scan.botchain.ai",
