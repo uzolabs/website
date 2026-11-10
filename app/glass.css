@@ -648,6 +648,11 @@ a.card:hover .card__art {
   white-space: nowrap;
   scrollbar-width: none;
 }
+/* When the field stretches wider than its command, keep the button at the end. */
+.cmd .copy {
+  margin-left: auto;
+  flex-shrink: 0;
+}
 .cmd code::before {
   content: "$ ";
   color: var(--gold);
