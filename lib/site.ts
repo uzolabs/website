@@ -72,6 +72,9 @@ export const navActions = {
   primary: { label: "Open Uzo Deploy", href: site.links.deploy },
 }
 
+const deployPage = (path: string) => `${site.links.deploy}${path}`
+const docsPage = (path: string) => `${site.links.docs}${path}`
+
 /** Footer columns. Empty hrefs are dropped when rendered. */
 export const footerColumns: { title: string; links: NavLink[] }[] = [
   {
@@ -81,6 +84,29 @@ export const footerColumns: { title: string; links: NavLink[] }[] = [
       { label: "@uzolabs/sdk", href: "/products#sdk" },
       { label: "templates", href: "/products#templates" },
       { label: "Roadmap", href: "/roadmap" },
+      { label: "Papers", href: "/papers" },
+    ],
+  },
+  {
+    title: "Deploy",
+    links: [
+      { label: "Deploy a token", href: deployPage("/deploy/token") },
+      { label: "Deploy an NFT", href: deployPage("/deploy/nft") },
+      { label: "Deploy a tip jar", href: deployPage("/deploy/tip-jar") },
+      { label: "My contracts", href: deployPage("/my") },
+      { label: "Deploy stats", href: deployPage("/stats") },
+    ],
+  },
+  {
+    title: "Docs",
+    links: [
+      { label: "Docs home", href: site.links.docs },
+      { label: "Quickstart guide", href: docsPage("/get-started/quickstart") },
+      { label: "How Uzo Deploy works", href: docsPage("/deploy/overview") },
+      { label: "Security", href: docsPage("/deploy/security") },
+      { label: "Networks and costs", href: docsPage("/deploy/networks-and-costs") },
+      { label: "BOT Chain limitations", href: docsPage("/get-started/bot-chain/known-limitations") },
+      { label: "Changelog", href: docsPage("/changelog") },
     ],
   },
   {
@@ -88,9 +114,8 @@ export const footerColumns: { title: string; links: NavLink[] }[] = [
     links: [
       { label: "Quickstart", href: "/quickstart" },
       { label: "Testnet faucet", href: faucetHref },
-      { label: "Docs", href: site.links.docs },
-      { label: "Papers", href: "/papers" },
       { label: "npm", href: site.links.npm },
+      { label: "BOTScan", href: site.links.botScan },
     ],
   },
   {
@@ -100,11 +125,6 @@ export const footerColumns: { title: string; links: NavLink[] }[] = [
       { label: "Telegram community", href: site.links.telegramCommunity },
       { label: "X", href: site.links.x },
       { label: "GitHub", href: site.links.github },
-    ],
-  },
-  {
-    title: "Contact",
-    links: [
       { label: "Email", href: site.links.email },
       { label: "Report an issue", href: site.links.issues },
     ],

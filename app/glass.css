@@ -1292,7 +1292,7 @@ a.card:hover .card__art {
 }
 .footer__grid {
   display: grid;
-  grid-template-columns: 1.6fr repeat(4, 1fr);
+  grid-template-columns: 1.4fr repeat(5, 1fr);
   gap: 32px;
 }
 .footer__brand {
@@ -1388,7 +1388,7 @@ a.card:hover .card__art {
     grid-template-columns: repeat(2, 1fr);
   }
   .footer__grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   .footer__brand {
     grid-column: 1 / -1;
