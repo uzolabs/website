@@ -24,7 +24,7 @@ export const sdkModules: { path: string; line: string; status: Status; note?: st
   { path: "@uzolabs/sdk/chains", line: "botChain and botChainTestnet for viem", status: "Available" },
   { path: "@uzolabs/sdk/contracts", line: "Addresses and typed ABIs", status: "Available" },
   { path: "@uzolabs/sdk/explorer", line: `A ${explorerName} client with no API key`, status: "Available" },
-  { path: "@uzolabs/sdk/bdex", line: "Quotes and swaps on BDEX", status: "Planned", note: "0.3.0" },
+  { path: "@uzolabs/sdk/bdex", line: "Quotes and swaps on BDEX", status: "Available" },
   { path: "@uzolabs/sdk/bridge", line: "Bridge helpers", status: "Planned", note: "0.4.0" },
   { path: "@uzolabs/sdk/paymaster", line: "Gasless transactions", status: "Planned", note: "0.5.0" },
 ]

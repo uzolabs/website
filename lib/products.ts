@@ -65,16 +65,17 @@ export const products: Product[] = [
     icon: Package,
     status: "Available",
     version: `v${sdkVersion}`,
-    summary: "Chain definitions, contract addresses, typed ABIs and a BOTScan client, built on viem.",
+    summary: "Chain definitions, contract addresses, typed ABIs, a BOTScan client and BDEX swaps, built on viem.",
     detail:
       "One install gives your app the BOT Chain network definitions it needs, so you stop copying chain IDs and RPC URLs between projects. It never touches private keys.",
     includes: [
       "`botChain` and `botChainTestnet` chain definitions for viem",
       "Contract addresses and typed ABIs, including the BDEX V2 router",
       "A BOTScan explorer client with no API key",
+      "BDEX swap quotes and unsigned swap calls, with a 5% slippage cap",
       "Typed errors with stable codes",
     ],
-    planned: ["BDEX helpers in 0.3.0", "Bridge helpers in 0.4.0", "Paymaster helpers in 0.5.0"],
+    planned: ["Bridge helpers in 0.4.0", "Paymaster helpers in 0.5.0"],
     command: installCommand,
     links: [
       { label: "npm", href: site.links.npm },

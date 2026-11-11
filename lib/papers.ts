@@ -43,7 +43,7 @@ export const papers: Paper[] = [
     version: "v1.0",
     date: "November 2026",
     pages: 7,
-    size: "76 KB",
+    size: "77 KB",
     summary:
       "The full detail. A measurement study of BOT Chain's developer surface, the design and security properties of Uzo Deploy, and the architecture of the wider toolkit.",
     covers: [
